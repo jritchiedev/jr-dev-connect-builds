@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#111515">
+  <meta name="description" content="One storm. One dark signal station. A short parser adventure powered by Wayfinder, a portable JavaScript interactive fiction engine.">
+  <title>The Last Signal — Wayfinder</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./wayfinder.js" defer></script>
+  <script src="./game.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#command">Skip to command</a>
+  <header class="masthead">
+    <a class="wordmark" href="./index.html" aria-label="Wayfinder home"><span class="mark" aria-hidden="true">W</span> WAYFINDER <span class="edition">/ FICTION 001</span></a>
+    <nav aria-label="Session"><button id="save-button">Save</button><button id="load-button">Load</button><button id="restart-button">Restart</button><button id="about-button" class="engine-link">The engine <span aria-hidden="true">↗</span></button></nav>
+  </header>
+  <div class="layout">
+    <aside class="field-guide" aria-label="Field notes">
+      <details id="notes" open>
+        <summary>FIELD NOTES <span class="mobile-notes">Location, inventory & progress</span><span class="notes-toggle" aria-hidden="true">+</span></summary>
+        <div class="notes-body">
+          <div class="station-illustration" aria-hidden="true">
+            <svg viewBox="0 0 240 180" fill="none"><path d="M17 152h206M30 160h52m61 0h61M50 147l20-18 21 5 11-21 22 6 15-13 31 26 30 15"/><path d="M102 118l7-75h29l8 77M106 71h35M103 100h41M113 45V29h21v16M109 29h29l-15-13-14 13Zm-6 16h40M117 19v-8m12 8v-8M118 118v-15h12v15M115 56h17v9h-17zM113 82h22v9h-22zM90 128v-12h15m40 0h14v12M36 138l9-13m-5 0h10M186 131l8-14m-5 0h10"/><path class="beam" d="M134 34l78-20m-78 26 87 20M113 34 30 14m83 26L22 60"/><path class="sea" d="M18 170h39m13 0h61m16 0h76M13 178h102m15 0h61"/></svg>
+            <span>NORTH REACH SIGNAL STATION</span>
+          </div>
+          <section class="note-section"><h2>YOUR LOCATION</h2><p id="location-name">The landing</p><div id="exit-buttons" class="exit-buttons" aria-label="Available directions"></div></section>
+          <section class="note-section"><h2>THE WORK AT HAND <span id="progress-count">0 / 3</span></h2><ol class="objectives"><li id="goal-light"><span class="checkbox" aria-hidden="true"></span>Restore the lamp</li><li id="goal-tune"><span class="checkbox" aria-hidden="true"></span>Set the channel</li><li id="goal-signal"><span class="checkbox" aria-hidden="true"></span>Bring the ship home</li></ol></section>
+          <section class="note-section"><h2>IN YOUR POCKETS</h2><ul id="inventory-list"><li class="muted">Nothing yet.</li></ul></section>
+          <div class="guide-footer"><button id="hint-button">Need a nudge? <span aria-hidden="true">↗</span></button><p>No clock to beat. Take your time.</p><button id="notes-about-button" class="mobile-engine">The engine <span aria-hidden="true">↗</span></button></div>
+        </div>
+      </details>
+    </aside>
+    <main id="main">
+      <section class="story-intro" aria-labelledby="story-title">
+        <div class="eyebrow"><span class="status-light" aria-hidden="true"></span> A SHORT PARSER ADVENTURE <span class="reading-time">15–20 MIN</span></div>
+        <h1 id="story-title">The Last<br><em>Signal.</em></h1>
+        <p class="dek">A light has gone out.<br>A ship is still coming.</p>
+        <div class="story-meta"><span>NORTH REACH, 1928</span><span>ONE NIGHT BEFORE DAWN</span></div>
+        <p class="prologue">You came to relieve the keeper. You found a broken lamp, an injured hand, and a storm that arrived too early. Somewhere out in the dark, a ship is waiting for a sign.</p>
+        <div class="first-instruction"><span aria-hidden="true">&gt;</span><p>This story moves in your own words.<br>Try <button data-command="north">north</button>, <button data-command="look">look</button>, or <button data-command="help">help</button> to begin.</p></div>
+      </section>
+      <div class="transcript-label"><span>YOUR STORY</span><span id="turn-count">TURN 00</span></div>
+      <div id="transcript" role="log" aria-label="Story transcript" aria-live="polite" aria-relevant="additions"></div>
+      <div id="ending-card" hidden><span class="eyebrow">THE END</span><h2>A way home.</h2><p>The signal held. So did you.</p><button id="ending-restart">Begin again <span aria-hidden="true">↗</span></button><button id="export-transcript">Keep your story <span aria-hidden="true">↓</span></button></div>
+      <div id="input-anchor"></div>
+    </main>
+  </div>
+  <footer class="command-dock">
+    <div class="command-inner">
+      <div id="clarification" hidden><span>BE MORE SPECIFIC</span><div id="clarification-options"></div><button id="cancel-button">Cancel</button></div>
+      <form id="command-form" autocomplete="off"><label for="command" class="prompt" aria-label="Your command">&gt;</label><input id="command" name="command" type="text" placeholder="What will you do?" maxlength="2048" spellcheck="false" autocapitalize="none" enterkeyhint="send" aria-describedby="command-hint"><button type="submit" aria-label="Submit command">Enter <span aria-hidden="true">↵</span></button></form>
+      <div class="command-bottom"><div class="quick-commands"><button data-command="look">Look</button><button data-command="inventory">Inventory</button><button data-command="help">Help</button><button data-command="undo">Undo</button></div><span id="command-hint">TYPE A COMMAND. PRESS ENTER.</span><span class="session-state" id="session-state">SESSION IN MEMORY</span></div>
+    </div>
+  </footer>
+  <div id="toast" role="status" hidden></div>
+  <dialog id="restart-dialog" aria-labelledby="restart-title"><button class="dialog-close" data-close="restart-dialog" aria-label="Close">×</button><span class="eyebrow">A FRESH PAGE</span><h2 id="restart-title">Begin again?</h2><p>Your current transcript will be cleared. Your saved game will still be available.</p><div class="dialog-actions"><button data-close="restart-dialog">Keep playing</button><button id="confirm-restart" class="primary">Restart story</button></div></dialog>
+  <dialog id="load-dialog" aria-labelledby="load-title"><button class="dialog-close" data-close="load-dialog" aria-label="Close">×</button><span class="eyebrow">PICK UP THE THREAD</span><h2 id="load-title">Load a story.</h2><p id="save-description">No saved game on this device yet.</p><div class="dialog-actions"><button id="restore-local">Load saved game</button><button id="import-button">Import save file</button></div><p class="small-note">Save files belong to this version of The Last Signal.</p></dialog>
+  <dialog id="about-dialog" aria-labelledby="about-title"><button class="dialog-close" data-close="about-dialog" aria-label="Close">×</button><span class="eyebrow">THE ENGINE UNDER THE STORY</span><h2 id="about-title">Wayfinder.</h2><p>A headless JavaScript library for parser fiction. Compiled grammar productions, scoped noun resolution, and a world that remembers.</p><div class="engine-facts"><span>No dependencies</span><span>One script tag</span><span>Any frontend</span></div><pre><code>&lt;script src="wayfinder.js"&gt;&lt;/script&gt;
+
+const story = new Wayfinder.Engine({
+  id: 'my-story',
+  objects: [
+    {id: 'room', name: 'A room', room: true},
+    {id: 'player', name: 'you',
+      actor: true, parent: 'room'}
+  ]
+});
+
+const result = story.execute('look');</code></pre><p class="small-note">English parser and authoring library inspired by Inform and TADS. It does not compile their source languages.</p><div class="dialog-actions"><a href="./wayfinder.js" download>Get the library ↓</a><a href="./API.md" target="_blank" rel="noopener">Read the API ↗</a><button id="export-save">Export game save ↓</button></div></dialog>
+  <input type="file" id="save-file" accept=".json,application/json" hidden>
+  <noscript><p class="noscript">Enable JavaScript to play The Last Signal.</p></noscript>
+</body>
+</html>
